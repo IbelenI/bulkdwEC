@@ -14,7 +14,7 @@ loct <- "G://00_PhD_II//Rfolder//bulkdwEC//temp//"
 
 #Libraries
 
-#For the first time I am using "tidyverse" for data manipulation which includes some packages I normally use and some that are imposing a different approach: "ggplot2", "dplyr", "tidyr", "readr", "purrr", stringr, "forcats". More info: https://www.tidyverse.org/packages/
+#For the first time I am using "tidyverse" for data manipulation which includes some packages I normally use and some that are imposing me a different approach: "ggplot2", "dplyr", "tidyr", "readr", "purrr", stringr, "forcats". More info: https://www.tidyverse.org/packages/
 
   # install.packages("tidyverse")
   library (tidyverse, quietly=T, warn.conflicts=F, logical.return=F)
@@ -225,28 +225,16 @@ Data sets are available in the "data" directory in the bulk download facility <a
 
 Each file REST request is made with the pattern:
 
-    [con][%2F][code][file extension]
+    [con][%2F][data flow code][file extension]
 
-If I would like to download all tables available I can easily create a vector with all REST requests to be used in a function.
+If I want to download all of them I can easily create a vector with all REST requests to be used in a function.
 
 ```{r data_origin_all}
-  #REST request to the data folder:  
-  con <- "https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&dir=data"
 
-  #All REST request to the SDMX files:  
-    alltsvcon <- paste0(
-      con, 
-      "%2F", 
-      tbcont$code[which (tbcont$type=="table")], #codes for data tables
-      ".tsv.gz")
-    
-  #All REST request to the TSV files:    
-    allsdmcon <- paste0(
-      con, 
-      "%2F", 
-      tbcont$code[which (tbcont$type=="table")], #codes for data tables
-      ".sdmx.zip")
-    
+    con <- "https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&dir=data"
+
+    alltsvcon <- paste0(con, "%2F", tbcont$code[which (tbcont$type=="table")],".tsv.gz")
+    allsdmcon <- paste0(con, "%2F", tbcont$code[which (tbcont$type=="table")],".sdmx.zip")
 ```
 
 Although, there is already a package names <a href = "https://ropengov.github.io/eurostat"><i>eurostat</i></a> where there are some usefull functions we can implement in the code.
@@ -317,7 +305,7 @@ theme_set(theme_minimal())
 
 # Basic line plot
 p   <- ggplot(
-    data = leu_gd, aes(x = time, y = values, group=geo)
+    data = economics, aes(x = date, y = pop)
     )+
     geom_line(color = "#00AFBB", size = 2)
 
